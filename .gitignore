@@ -1,0 +1,11 @@
+*.class
+*.log
+
+/.idea/
+/.settings/
+/bin/
+/Groovy/
+/GroovyModule/
+.classpath
+.project
+com.vogella.groovy.first.iml
