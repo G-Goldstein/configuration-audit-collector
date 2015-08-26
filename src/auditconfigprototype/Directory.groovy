@@ -1,6 +1,7 @@
 package auditconfigprototype
 
 import java.io.File;
+import java.util.List;
 
 class Directory {
   
@@ -8,6 +9,8 @@ class Directory {
   List <ConfigFile> configFiles
   String relativeDirectory
   private String dir
+  
+  List <String> ignoreDirectories = ['Archive', 'archive']
     
   Directory(String inDir, String relDir) {
 	  File dirFile
@@ -17,11 +20,15 @@ class Directory {
 	  dirFile = new File(dir)
 	  configFiles = []
 	  subDirectories = []
-	  dirFile.eachFileMatch ~/.*\.ini/, {
+	  dirFile.eachFileMatch ~/.*\.(properties|ini|pref)/, {
 		  configFiles << new ConfigFile(it.absolutePath, relativeDirectory)
 	  }
-	  dirFile.eachDir {
-		  subDirectories << new Directory(it.absolutePath, relativeDirectory + "$it.name/")
+	  dirFile.eachDir { d ->
+		  if (!(d.name in ignoreDirectories)) {
+		    subDirectories << new Directory(d.absolutePath, relativeDirectory + "$d.name/")
+		  }
 	  }
+	  configFiles = configFiles.findAll { it.overrideLevels.size > 0 }
   }
+  
 }

@@ -23,6 +23,7 @@ class ConfigFile {
 	  file = new File(inPath)
 	  lines = ConfigFileOps.instance.cleanLines(file.getText().split(newLine).toList())
 	  overrideLevels = OverrideLevelBuilder.instance.getOverrideSections(lines)
+	  overrideLevels = overrideLevels.findAll { it.keyValuePairs.size > 0 }
   }
    
 }
@@ -35,11 +36,13 @@ class ConfigFileOps {
 	private def equals = '='
 	private def nothing = ''
 	private def squareBracket = '['
+	private def commentChar = '#'
 	
 	List <String> cleanLines(List <String> lines) {
-		lines = lines.findAll { it.contains(equals) || it.contains(squareBracket) }
+		lines = lines.findAll { (!it.startsWith(commentChar)) && (it.contains(equals) || it.startsWith(squareBracket)) }
 					 .collect { it.replaceAll(tab, nothing) }
 					 .collect { it.replaceAll(returnCarriage, nothing) }
 					 .collect { it.trim() }
 	}
+	
 }

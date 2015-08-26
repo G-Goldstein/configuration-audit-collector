@@ -3,8 +3,9 @@ package auditconfigprototype
 import groovy.json.*
 
 
-String rootDirectory = "//172.30.30.243/jhc/SGSSUAT/Config/Envs/"
-String outputFileName = "SGSSUAT"
+String rootDirectory = "//172.30.30.243/jhc/SGSSPreProd/Config/"
+String outputPath = "C:/Users/goldsteing/Desktop/Projects/Audit Configuration/viewer/data/"
+String outputFileName = "SGSSPreProd"
 
 outputFileName += ".json"
 
@@ -12,7 +13,7 @@ directory = new Directory(rootDirectory, "/")
 
 configFileJson = JsonOutput.toJson(ConfigFileCollector.instance.collectConfigFiles(directory))
 
-String outputFilePath = rootDirectory + outputFileName
+String outputFilePath = outputPath + outputFileName
 
 def outputFile = new File(outputFilePath)
 
