@@ -12,7 +12,7 @@ class Directory {
   
   List <String> ignoreDirectories = ['Archive', 'archive']
     
-  Directory(String inDir, String relDir) {
+  Directory(String inDir, String relDir="/") {
 	  File dirFile
 	  dir = inDir
 	  relativeDirectory = relDir
